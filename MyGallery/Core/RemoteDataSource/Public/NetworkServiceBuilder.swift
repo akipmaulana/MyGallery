@@ -21,8 +21,4 @@ public struct NetworkServiceBuilder {
             return _rest
         }
     }
-    
-    public init(rest service: NetworkService) {
-        self.rest = service
-    }
 }
