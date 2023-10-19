@@ -18,6 +18,7 @@ Those steps would be executed for each item asynchrounously, so that user intera
 
 ## How to Run Program
 Simply clone this repo and open `MyGallery.xcodeproj`
+- Install XCode 15
 - Choose Device Targe
 - Click Run
 
