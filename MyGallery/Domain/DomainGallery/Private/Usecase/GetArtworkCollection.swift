@@ -11,20 +11,30 @@ struct GetArtworkCollection: NetworkServiceSpec {
     
     typealias Response = APIResponsePagination<Artwork>
     
+    private let query: String?
     private let page: Int
     private let limit: Int
     
-    init(page: Int, limit: Int) {
+    init(query: String? = nil, page: Int, limit: Int) {
+        self.query = query
         self.page = page
         self.limit = limit
     }
     
     var url: String {
-        String(
-            format: "%@/%@",
-            baseUrl,
-            "api/v1/artworks"
-        )
+        if let query {
+            return String(
+                format: "%@/%@",
+                baseUrl,
+                "api/v1/artworks/search"
+            )
+        } else {
+            return String(
+                format: "%@/%@",
+                baseUrl,
+                "api/v1/artworks"
+            )
+        }
     }
     
     var method: HTTPMethod {
@@ -32,9 +42,18 @@ struct GetArtworkCollection: NetworkServiceSpec {
     }
     
     var queryItems: [String : String] {
-        [
-            "limit": String(format: "%d", limit),
-            "page": String(format: "%d", page),
-        ]
+        if let query {
+            return [
+                "q": query,
+                "limit": String(format: "%d", limit),
+                "page": String(format: "%d", page),
+            ]
+        } else {
+            return [
+                "limit": String(format: "%d", limit),
+                "page": String(format: "%d", page),
+            ]
+        }
+        
     }
 }

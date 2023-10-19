@@ -9,9 +9,7 @@ import Foundation
 
 public protocol ArtworkInteractor {
     
-    func fetchArtworks(page: Int, limit: Int) async throws -> APIResponsePagination<Artwork>?
+    func fetchArtworks(query: String?, page: Int, limit: Int) async throws -> APIResponsePagination<Artwork>?
     
     func fetchImageUrl(artworkId: Int) async throws -> URL?
-    
-    func searchArtworks(query: String) async throws -> APIResponsePagination<Artwork>?
 }

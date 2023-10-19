@@ -15,8 +15,8 @@ struct DefaultArtworkInteractor: ArtworkInteractor {
         self.service = service
     }
     
-    func fetchArtworks(page: Int, limit: Int) async throws -> APIResponsePagination<Artwork>? {
-        return try await service.request(GetArtworkCollection(page: page, limit: limit))
+    func fetchArtworks(query: String?, page: Int, limit: Int) async throws -> APIResponsePagination<Artwork>? {
+        return try await service.request(GetArtworkCollection(query: query, page: page, limit: limit))
     }
     
     /// Fetching image url from given artworkId. The flow process is supposed to be
@@ -43,10 +43,5 @@ struct DefaultArtworkInteractor: ArtworkInteractor {
         )
         return URL(string: urlString)
     }
-    
-    func searchArtworks(query: String) async throws -> APIResponsePagination<Artwork>? {
-        return try await service.request(GetArtworkSearch(query: query))
-    }
-    
     
 }

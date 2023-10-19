@@ -11,6 +11,8 @@ struct GalleryScreen: View {
     
     @StateObject private var viewModel = GalleryViewModel()
     
+    @State private var searchText: String = ""
+    
     var lastRowView: some View {
         ZStack(alignment: .center) {
             switch viewModel.paginationState {
@@ -47,7 +49,37 @@ struct GalleryScreen: View {
     }
     
     var body: some View {
-        ZStack {
+        VStack {
+            HStack {
+                Image(systemName: "magnifyingglass")
+                
+                TextField(
+                    "Type your search here",
+                    text: $searchText
+                )
+                .foregroundColor(Color.black)
+                .font(.title3)
+                .autocorrectionDisabled()
+                .textInputAutocapitalization(.never)
+                .onSubmit {
+                    Task {
+                        await viewModel.searchGallery(query: searchText)
+                    }
+                }
+                .submitLabel(.done)
+            }
+            .padding()
+            .overlay(
+                RoundedRectangle(
+                    cornerRadius: 10
+                )
+                .stroke(
+                    lineWidth: 1
+                )
+                .foregroundColor(Color.gray.opacity(0.6))
+            )
+            .padding()
+            
             ScrollView {
                 LazyVGrid(
                     columns: [

@@ -22,12 +22,13 @@ final class GalleryViewModel: ObservableObject {
     
     @Published var artworks: [GalleryThumbnailRenderable] = []
     @Published var paginationState: GalleryPaginationState = .idle
-    @Published var isMoreDataAvailable: Bool = false
     
     let interactor: ArtworkInteractor
     
     private var page: Int = 1
     private var totalPages: Int = 0
+    private var isMoreDataAvailable: Bool = false
+    private var query: String?
     
     init(interactor: ArtworkInteractor = GalleryInteractorBuilder().artwork) {
         self.interactor = interactor
@@ -38,7 +39,7 @@ final class GalleryViewModel: ObservableObject {
             self?.paginationState = .isLoading
         }
         do {
-            let pagination = try await interactor.fetchArtworks(page: page, limit: 15)
+            let pagination = try await interactor.fetchArtworks(query: query, page: page, limit: 15)
             let artworksRenderable = pagination?
                 .data?
                 .compactMap{ GalleryThumbnailRenderable(imageId: $0.id) } ?? []
@@ -56,9 +57,16 @@ final class GalleryViewModel: ObservableObject {
         }
     }
     
-    func loadMoreGallery() async {
-        page += 1
-        print("loadMoreGallery")
+    func searchGallery(query: String) async {
+        if query.isEmpty {
+            self.query = nil
+        } else {
+            self.query = query
+        }
+        page = 1
+        DispatchQueue.main.async { [weak self] in
+            self?.artworks = []
+        }
         await refreshGallery()
     }
     
@@ -71,6 +79,10 @@ final class GalleryViewModel: ObservableObject {
         }
         
         guard case .idle = paginationState else {
+            return
+        }
+        
+        guard isMoreDataAvailable else {
             return
         }
         
