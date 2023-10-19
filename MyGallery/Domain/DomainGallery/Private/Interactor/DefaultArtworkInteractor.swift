@@ -19,19 +19,29 @@ struct DefaultArtworkInteractor: ArtworkInteractor {
         return try await service.request(GetArtworkCollection(page: page, limit: limit))
     }
     
+    /// Fetching image url from given artworkId. The flow process is supposed to be
+    /// - Retrieve one or more artworks with image_id fields through API Request
+    /// - Find the base IIIF Image API endpoint in the `config.iiif_url`
+    /// - Append the `image_id` of the artwork as a segment to this URL
+    /// - Append `/full/843,/0/default.jpg` to the URL
+    ///
+    /// - Parameters
+    ///     - artworkId: given id from Artwork item in collection.
+    /// - Returns: Formatted URL to fetch image over internet
     func fetchImageUrl(artworkId: Int) async throws -> URL? {
         let usecase = GetImageIIIF(artworkId: artworkId)
-        let imageIIIF = try await service.request(usecase).data
+        let responseObj = try await service.request(usecase)
+        let imageIIIF: ImageIIIF? = responseObj.data
         guard let imageId = imageIIIF?.imageId else {
             return nil
         }
-        return URL(string: String(
-            format: "%@/%@/%@/%@",
-            "https://www.artic.edu",
-            "iiif/2",
+        let urlString: String = String(
+            format: "%@/%@/%@",
+            responseObj.config?.iiifUrl ?? "https://www.artic.edu",
             imageId,
-            "full/200,/0/default.jpg"
-        ))
+            "full/843,/0/default.jpg"
+        )
+        return URL(string: urlString)
     }
     
     func searchArtworks(query: String) async throws -> APIResponsePagination<Artwork>? {

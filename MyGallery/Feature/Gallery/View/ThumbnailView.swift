@@ -15,7 +15,7 @@ struct ThumbnailView: View {
         self.artworkId = artworkId
     }
     
-    @ObservedObject private var viewModel: ThumbnailViewModel = ThumbnailViewModel()
+    @StateObject private var viewModel: ThumbnailViewModel = ThumbnailViewModel()
     
     var body: some View {
         if let artworkId {

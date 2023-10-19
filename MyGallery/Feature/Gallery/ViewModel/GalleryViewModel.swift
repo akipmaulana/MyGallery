@@ -38,7 +38,7 @@ final class GalleryViewModel: ObservableObject {
             self?.paginationState = .isLoading
         }
         do {
-            let pagination = try await interactor.fetchArtworks(page: page, limit: 10)
+            let pagination = try await interactor.fetchArtworks(page: page, limit: 15)
             let artworksRenderable = pagination?
                 .data?
                 .compactMap{ GalleryThumbnailRenderable(imageId: $0.id) } ?? []
@@ -59,6 +59,23 @@ final class GalleryViewModel: ObservableObject {
     func loadMoreGallery() async {
         page += 1
         print("loadMoreGallery")
+        await refreshGallery()
+    }
+    
+    func loadMoreGallery(current thumbnail: GalleryThumbnailRenderable) async {
+        let index: Int = artworks.firstIndex(where: { $0.imageId == thumbnail.imageId }) ?? 0
+        let thresholdIndex = artworks.count - 3
+        
+        guard index >= thresholdIndex else {
+            return
+        }
+        
+        guard case .idle = paginationState else {
+            return
+        }
+        
+        page += 1
+        print("loadMoreGallery \(page)")
         await refreshGallery()
     }
 }

@@ -39,7 +39,7 @@ struct GalleryScreen: View {
                 )
                 .onAppear {
                     Task {
-                        await viewModel.loadMoreGallery()
+                        await viewModel.loadMoreGallery(current: item)
                     }
                 }
             }
