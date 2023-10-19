@@ -22,9 +22,12 @@ Simply clone this repo and open `MyGallery.xcodeproj`
 - Click Run
 
 ## Code Coverage
-Code covered by unit test has reached 73%
+Code has covered by unit test with percentage about 73%
 
 ![code_coverage](https://raw.githubusercontent.com/akipmaulana/MyGallery/main/Example/code_coverage.png)
 
 ## Result
+| Positive Search | Negative Search | Populated |
+| :---:   | :---: | :---: |
+| ![poopulated](https://raw.githubusercontent.com/akipmaulana/MyGallery/main/Example/positive_search.png) | ![poopulated](https://raw.githubusercontent.com/akipmaulana/MyGallery/main/Example/negative_search.png)   | ![poopulated](https://raw.githubusercontent.com/akipmaulana/MyGallery/main/Example/populated.png) |
 
