@@ -16,7 +16,9 @@ public struct DMInteractorBuilder {
         }
         get {
             guard let _artwork else {
-                return DefaultArtworkInteractor()
+                return DefaultArtworkInteractor(
+                    service: NetworkServiceRestful()
+                )
             }
             return _artwork
         }

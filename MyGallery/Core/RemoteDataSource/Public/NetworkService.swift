@@ -24,11 +24,8 @@ public protocol NetworkServiceSpec {
     var headers: [String: String] { get }
     var queryItems: [String: String] { get }
     var body: Encodable? { get }
-    var keychainBaseUrl: String { get }
     
     func map(_ data: Data) throws -> Response
-    
-    func mapToDictionary(_ data: Data) throws -> [String: Any]
 }
 
 public extension NetworkServiceSpec where Response: Decodable {
@@ -38,23 +35,23 @@ public extension NetworkServiceSpec where Response: Decodable {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return try decoder.decode(Response.self, from: data)
     }
-    
-    func mapToDictionary(_ data: Data) throws -> [String: Any] {
-        let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-        return result ?? [:]
-    }
 }
 
 public extension NetworkServiceSpec {
     
     var baseUrl: String {
-        return "https://api.artic.edu/docs/"
+        return "https://api.artic.edu"
     }
     
     func mapApiError(_ data: Data) throws -> APIResponseError {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return try decoder.decode(APIResponseError.self, from: data)
+    }
+    
+    func mapToDictionary(_ data: Data) throws -> [String: Any] {
+        let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        return result ?? [:]
     }
 }
 

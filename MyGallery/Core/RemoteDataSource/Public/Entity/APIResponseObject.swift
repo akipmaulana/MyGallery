@@ -7,6 +7,12 @@
 
 import Foundation
 
+public struct APIResponseObject<D: Decodable>: Decodable {
+    let data: D?
+    let info: APIResponsePaginationInfo?
+    let config: APIResponsePaginationConfig?
+}
+
 public struct APIResponsePagination<D: Decodable>: Decodable {
     let pagination: APIResponsePaginationProp?
     let data: [D]?
