@@ -23,7 +23,7 @@ struct GetArtworkCollection: NetworkServiceSpec {
         String(
             format: "%@/%@",
             baseUrl,
-            "/api/v1/artworks"
+            "api/v1/artworks"
         )
     }
     

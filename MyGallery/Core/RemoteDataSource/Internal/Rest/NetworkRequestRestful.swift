@@ -60,6 +60,9 @@ internal struct NetworkServiceRestful: NetworkService {
             case 403:
                 let model = try spec.mapApiError(data)
                 throw ErrorNetwork.forbidden(model: model)
+            case 404:
+                let model = try spec.mapApiError(data)
+                throw ErrorNetwork.notFound(model: model)
             case 500:
                 let model = try spec.mapApiError(data)
                 throw ErrorNetwork.internalServer(model: model)

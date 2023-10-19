@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DMInteractorBuilder {
+public struct GalleryInteractorBuilder {
     
     private var _artwork: ArtworkInteractor?
     public var artwork: ArtworkInteractor {

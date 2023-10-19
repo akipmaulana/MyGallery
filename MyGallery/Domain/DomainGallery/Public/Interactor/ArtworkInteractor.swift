@@ -11,7 +11,7 @@ public protocol ArtworkInteractor {
     
     func fetchArtworks(page: Int, limit: Int) async throws -> APIResponsePagination<Artwork>?
     
-    func fetchImageUrl(artworkId: String) async throws -> URL?
+    func fetchImageUrl(artworkId: Int) async throws -> URL?
     
     func searchArtworks(query: String) async throws -> APIResponsePagination<Artwork>?
 }

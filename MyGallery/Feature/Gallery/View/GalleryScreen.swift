@@ -9,60 +9,15 @@ import SwiftUI
 
 struct GalleryScreen: View {
     
-    static let imageUrlHardcoded = "https://www.artic.edu/iiif/2/2d484387-2509-5e8e-2c43-22f9981972eb/full/843,/0/default.jpg"
-    
-    var data: [ArtworkThumbnailRenderable] = [
-        ArtworkThumbnailRenderable(
-            imageUrl: URL(string: GalleryScreen.imageUrlHardcoded)
-        ),
-        ArtworkThumbnailRenderable(
-            imageUrl: URL(string: GalleryScreen.imageUrlHardcoded)
-        ),
-        ArtworkThumbnailRenderable(
-            imageUrl: URL(string: GalleryScreen.imageUrlHardcoded)
-        ),
-        ArtworkThumbnailRenderable(
-            imageUrl: URL(string: GalleryScreen.imageUrlHardcoded)
-        ),
-        ArtworkThumbnailRenderable(
-            imageUrl: URL(string: GalleryScreen.imageUrlHardcoded)
-        ),
-        ArtworkThumbnailRenderable(
-            imageUrl: URL(string: GalleryScreen.imageUrlHardcoded)
-        ),
-        ArtworkThumbnailRenderable(
-            imageUrl: URL(string: GalleryScreen.imageUrlHardcoded)
-        ),
-        ArtworkThumbnailRenderable(
-            imageUrl: URL(string: GalleryScreen.imageUrlHardcoded)
-        ),
-        ArtworkThumbnailRenderable(
-            imageUrl: URL(string: GalleryScreen.imageUrlHardcoded)
-        ),
-    ]
+    @StateObject private var viewModel = GalleryViewModel()
     
     @ViewBuilder
     var gridContent: some View {
         ForEach(
-            data,
+            viewModel.artworks,
             id: \.id,
             content: { item in
-                AsyncImage(
-                    url: item.imageUrl,
-                    content: { image in
-                        image.resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(
-                                maxWidth: 300, 
-                                maxHeight: 300
-                            )
-                    },
-                    placeholder: {
-                        ProgressView()
-                            .padding()
-                    }
-                )
-                
+                ThumbnailView(artworkId: item.imageId)
             }
         )
     }
@@ -81,6 +36,9 @@ struct GalleryScreen: View {
                     }
                 )
             }
+        }
+        .task {
+            await viewModel.refreshGallery()
         }
         .navigationTitle("Artwork Gallery")
     }

@@ -22,5 +22,6 @@ public enum ErrorNetwork: Error {
     case invalidResponse
     case serializationError
     case forbidden(model: APIResponseError)
+    case notFound(model: APIResponseError)
     case internalServer(model: APIResponseError)
 }

@@ -21,7 +21,7 @@ struct GetArtworkSearch: NetworkServiceSpec {
         String(
             format: "%@/%@",
             baseUrl,
-            "/api/v1/artworks/search"
+            "api/v1/artworks/search"
         )
     }
     

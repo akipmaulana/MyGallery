@@ -9,17 +9,17 @@ import Foundation
 
 struct GetImageIIIF: NetworkServiceSpec {
     
-    typealias Response = ImageIIIF
+    typealias Response = APIResponseObject<ImageIIIF>
     
-    private let artworkId: String
+    private let artworkId: Int
     
-    init(artworkId: String) {
+    init(artworkId: Int) {
         self.artworkId = artworkId
     }
     
     var url: String {
         String(
-            format: "%@/%@/%@",
+            format: "%@/%@/%d",
             baseUrl,
             "api/v1/artworks",
             artworkId

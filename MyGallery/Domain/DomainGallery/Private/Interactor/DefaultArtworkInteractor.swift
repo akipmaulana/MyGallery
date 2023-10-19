@@ -19,15 +19,15 @@ struct DefaultArtworkInteractor: ArtworkInteractor {
         return try await service.request(GetArtworkCollection(page: page, limit: limit))
     }
     
-    func fetchImageUrl(artworkId: String) async throws -> URL? {
+    func fetchImageUrl(artworkId: Int) async throws -> URL? {
         let usecase = GetImageIIIF(artworkId: artworkId)
-        let imageIIIF = try await service.request(usecase)
-        guard let imageId = imageIIIF.imageId else {
+        let imageIIIF = try await service.request(usecase).data
+        guard let imageId = imageIIIF?.imageId else {
             return nil
         }
         return URL(string: String(
             format: "%@/%@/%@/%@",
-            usecase.baseUrl,
+            "https://www.artic.edu",
             "iiif/2",
             imageId,
             "full/843,/0/default.jpg"
