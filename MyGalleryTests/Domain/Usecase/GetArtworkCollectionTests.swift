@@ -28,11 +28,9 @@ final class GetArtworkCollectionTests: XCTestCase {
     }
     
     func test_httpUrl_withoutQuery_shouldReturnEndpointFetchOnly() {
-        func test_httpUrl_withUserId_shouldReturnEndpointSearch() {
-            let usecase = GetArtworkCollection(page: 1, limit: 15)
-            let containsEndpointSearch: Bool = usecase.url.contains("api/v1/artworks")
-            XCTAssertTrue(containsEndpointSearch)
-        }
+        let usecase = GetArtworkCollection(page: 1, limit: 15)
+        let containsEndpointSearch: Bool = usecase.url.contains("api/v1/artworks")
+        XCTAssertTrue(containsEndpointSearch)
     }
     
     func test_httpUrl_withoutQuery_shouldReturnExpectedParam() {
