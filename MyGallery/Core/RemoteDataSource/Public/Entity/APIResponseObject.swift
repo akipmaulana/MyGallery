@@ -6,3 +6,29 @@
 //
 
 import Foundation
+
+public struct APIResponsePagination<D: Decodable>: Decodable {
+    let pagination: APIResponsePaginationProp?
+    let data: [D]?
+    let info: APIResponsePaginationInfo?
+    let config: APIResponsePaginationConfig?
+}
+
+public struct APIResponsePaginationProp: Decodable {
+    let total: Int?
+    let limit: Int?
+    let offset: Int?
+    let totalPages: Int?
+    let currentPage: Int?
+}
+
+public struct APIResponsePaginationInfo: Decodable {
+    let licenseText: String?
+    let licenseLinks: [String]?
+    let version: String?
+}
+
+public struct APIResponsePaginationConfig: Decodable {
+    let iiifUrl: String?
+    let websiteUrl: String?
+}
