@@ -37,7 +37,7 @@ struct DefaultArtworkInteractor: ArtworkInteractor {
         }
         let urlString: String = String(
             format: "%@/%@/%@",
-            responseObj.config?.iiifUrl ?? "https://www.artic.edu",
+            responseObj.config?.iiifUrl ?? "https://www.artic.edu/iiif/2",
             imageId,
             "full/843,/0/default.jpg"
         )

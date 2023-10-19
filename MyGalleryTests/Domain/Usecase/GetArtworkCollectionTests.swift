@@ -10,22 +10,6 @@ import XCTest
 @testable import MyGallery
 
 final class GetArtworkCollectionTests: XCTestCase {
-
-    var stubJsonData: Data?
-    
-    override func setUpWithError() throws {
-        guard
-            let url = Bundle.main.url(forResource: "artwork_pagination", withExtension: "json")
-        else {
-            return
-        }
-        
-        stubJsonData = try Data(contentsOf: url)
-    }
-
-    override func tearDownWithError() throws {
-        stubJsonData = nil
-    }
     
     func test_httpUrl_withoutQuery_shouldReturnEndpointFetchOnly() {
         let usecase = GetArtworkCollection(page: 1, limit: 15)
