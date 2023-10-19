@@ -25,8 +25,10 @@ struct MyGalleryApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .navigationViewStyle(.stack)
+            NavigationStack {
+                GalleryScreen()
+                    .navigationViewStyle(.stack)
+            }
         }
         .modelContainer(sharedModelContainer)
     }

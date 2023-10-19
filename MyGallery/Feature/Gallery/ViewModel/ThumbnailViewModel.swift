@@ -19,8 +19,10 @@ final class ThumbnailViewModel: ObservableObject {
     
     func fetchImageArtwork(id: Int) async {
         do {
-            imageUrl = try await interactor.fetchImageUrl(artworkId: id)
-            print("Image URL \(imageUrl)")
+            let _imageUrl = try await interactor.fetchImageUrl(artworkId: id)
+            DispatchQueue.main.async { [weak self] in
+                self?.imageUrl = _imageUrl
+            }
         } catch(let error) {
             debugPrint("Error When Refresh Gallery \(error.localizedDescription)")
         }
