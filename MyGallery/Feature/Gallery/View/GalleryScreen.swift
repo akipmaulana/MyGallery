@@ -128,6 +128,11 @@ struct GalleryScreen: View {
                 
                 lastRowView
             }
+            .refreshable {
+                Task {
+                    await viewModel.searchGallery(query: searchText)
+                }
+            }
         }
         .task {
             await viewModel.refreshGallery()
