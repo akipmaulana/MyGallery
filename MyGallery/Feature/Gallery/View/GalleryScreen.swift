@@ -24,10 +24,44 @@ struct GalleryScreen: View {
             case .idle:
                 Text("Avilable More")
             case .failure(let error):
-                Text(error.localizedDescription)
+                VStack {
+                    Image(systemName: "network.slash")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.red.opacity(0.6))
+                        .frame(height: 100)
+                        .padding(.bottom, 16)
+                    
+                    Text("No artwork available at the moment")
+                        .font(.title3)
+                        .bold()
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom, 4)
+                    
+                    Text(error.localizedDescription)
+                        .multilineTextAlignment(.center)
+                }
+            case .empty:
+                VStack {
+                    Image(systemName: "xmark.icloud")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.red.opacity(0.6))
+                        .frame(height: 100)
+                        .padding(.bottom, 16)
+                    
+                    Text("No artwork available at the moment")
+                        .font(.title3)
+                        .bold()
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom, 4)
+                    
+                    Text("Please try again later. It might be not listed in our database")
+                        .multilineTextAlignment(.center)
+                }
             }
         }
-        .frame(height: 50)
+        
     }
     
     @ViewBuilder

@@ -16,6 +16,7 @@ enum GalleryPaginationState {
     case isLoading
     case idle
     case failure(Error)
+    case empty
 }
 
 final class GalleryViewModel: ObservableObject {
@@ -46,7 +47,7 @@ final class GalleryViewModel: ObservableObject {
             DispatchQueue.main.async { [weak self] in
                 self?.artworks.append(contentsOf: artworksRenderable)
                 self?.totalPages = pagination?.pagination?.totalPages ?? 0
-                self?.paginationState = .idle
+                self?.paginationState = (self?.totalPages ?? 0) > 0 ? .idle : .empty
                 self?.isMoreDataAvailable = (self?.page ?? 0) < (self?.totalPages ?? 0)
             }
         } catch(let error) {
