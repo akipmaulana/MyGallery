@@ -15,12 +15,12 @@ struct ThumbnailView: View {
         self.artworkId = artworkId
     }
     
-    @StateObject private var viewModel: ThumbnailViewModel = ThumbnailViewModel()
+    @State var imageUrl: URL?
     
     var body: some View {
         if let artworkId {
             AsyncImage(
-                url: viewModel.imageUrl,
+                url: imageUrl,
                 content: { image in
                     image.resizable()
                         .aspectRatio(contentMode: .fit)
@@ -35,10 +35,28 @@ struct ThumbnailView: View {
                 }
             )
             .task {
-                await viewModel.fetchImageArtwork(id: artworkId)
+                if imageUrl == nil {
+                    await fetchImageArtwork(id: artworkId)
+                }
             }
         } else {
             EmptyView()
+        }
+    }
+    
+    func fetchImageArtwork(id: Int) async {
+        do {
+            let _imageUrl = try await GalleryInteractorBuilder()
+                .artwork
+                .fetchImageUrl(
+                    artworkId: id
+                )
+            DispatchQueue.main.async {
+                print("fetchImageArtwork")
+                imageUrl = _imageUrl
+            }
+        } catch(let error) {
+            debugPrint("Error When Refresh Gallery \(error.localizedDescription)")
         }
     }
 }
