@@ -27,6 +27,9 @@ Code has covered by unit test with percentage about 73%
 
 ![code_coverage](https://raw.githubusercontent.com/akipmaulana/MyGallery/main/Example/code_coverage.png)
 
+## Leak Profilling
+![leak_profilling](https://raw.githubusercontent.com/akipmaulana/MyGallery/main/Example/leak_profilling.png)
+
 ## Result
 | Positive Search | Negative Search | Populated |
 | :---:   | :---: | :---: |
